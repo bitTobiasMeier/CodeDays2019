@@ -1,0 +1,43 @@
+﻿## Service definition ##
+application:
+  schemaVersion: 1.0.0-preview2
+  name: CodeDays2019MeshDemo
+  properties:
+    services:
+      - name: OrderService
+        properties:
+          description: OrderService description.
+          osType: Windows
+          codePackages:
+            - name: OrderService
+              image: orderservice:dev
+              endpoints:
+                - name: OrderServiceListener
+                  port: 80
+              environmentVariables:
+                - name: DeliveryServiceName
+                  value: "[parameters('OrderService_DeliveryServiceName')]"
+              resources:
+                requests:
+                  cpu: "[parameters('OrderService_cpu')]"
+                  memoryInGB: 1
+          replicaCount: 1
+          autoScalingPolicies:
+            - name: AutoScaleWorkerRule
+              trigger:
+                kind: AverageLoad
+                metric:
+                  kind: Resource
+                  name: cpu
+                lowerLoadThreshold: 0.2
+                upperLoadThreshold: 0.6
+                scaleIntervalInSeconds: 60
+              mechanism:
+                kind: AddRemoveReplica
+                minCount: 1
+                maxCount: 3
+                scaleIncrement: 1
+          networkRefs:
+            - name: CodeDays2019MeshDemoNetwork
+              endpointRefs:
+                - name: OrderServiceListener

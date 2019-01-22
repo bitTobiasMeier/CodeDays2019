@@ -1,0 +1,7 @@
+## Parameters file ##
+OrderService_cpu: 0.5
+OrderService_ingressport: 8080
+OrderService_DeliveryServiceName: DeliveryService
+DeliveryService_cpu: 0.5
+DeliveryService_ingressport: 8081
+

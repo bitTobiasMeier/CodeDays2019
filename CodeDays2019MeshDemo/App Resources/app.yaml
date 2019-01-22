@@ -1,0 +1,5 @@
+﻿application:
+  schemaVersion: 1.0.0-preview2
+  name: CodeDays2019MeshDemo
+  properties:
+    description: CodeDays2019MeshDemo description.

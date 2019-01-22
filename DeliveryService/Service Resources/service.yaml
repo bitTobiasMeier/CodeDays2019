@@ -1,0 +1,51 @@
+﻿## Service definition ##
+application:
+  schemaVersion: 1.0.0-preview2
+  name: CodeDays2019MeshDemo
+  properties:
+    services:
+      - name: DeliveryService
+        properties:
+          description: DeliveryService description.
+          osType: Windows
+          codePackages:
+            - name: DeliveryService
+              image: deliveryservice:dev
+              volumes:
+              - name: sfvol
+                creationParameters:
+                  kind: ServiceFabricVolumeDisk
+                  sizeDisk: Small
+                destinationPath: C:\app\data
+              endpoints:
+                - name: DeliveryServiceListener
+                  port: 80
+              environmentVariables:
+                - name: STATE_FOLDER_NAME
+                  value: DeliveryService
+#                - name: ApplicationInsights:InstrumentationKey
+#                  value: "<Place AppInsights key here, or reference it via a secret>"
+              resources:
+                requests:
+                  cpu: "[parameters('DeliveryService_cpu')]"
+                  memoryInGB: 1
+          replicaCount: 1
+          autoScalingPolicies:
+            - name: AutoScaleWorkerRule
+              trigger:
+                kind: AverageLoad
+                metric:
+                  kind: Resource
+                  name: cpu
+                lowerLoadThreshold: 0.2
+                upperLoadThreshold: 0.6
+                scaleIntervalInSeconds: 60
+              mechanism:
+                kind: AddRemoveReplica
+                minCount: 1
+                maxCount: 3
+                scaleIncrement: 1
+          networkRefs:
+            - name: CodeDays2019MeshDemoNetwork
+              endpointRefs:
+                - name: DeliveryServiceListener

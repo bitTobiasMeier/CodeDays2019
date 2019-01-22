@@ -1,0 +1,22 @@
+gateway:
+  schemaVersion: 1.0.0-preview2
+  name: CodeDays2019MeshDemoGateway
+  properties:
+    description: CodeDays2019MeshDemo Gateway Resource
+    sourceNetwork:
+      name: Open
+    destinationNetwork:
+      name: CodeDays2019MeshDemoNetwork
+    tcp:
+      - name: DeliveryServiceTCP
+        port: "[parameters('DeliveryService_ingressport')]"
+        destination:
+          applicationName: CodeDays2019MeshDemo
+          serviceName: DeliveryService
+          endpointName: DeliveryServiceListener
+      - name: OrderServiceTCP
+        port: "[parameters('OrderService_ingressport')]"
+        destination:
+          applicationName: CodeDays2019MeshDemo
+          serviceName: OrderService
+          endpointName: OrderServiceListener

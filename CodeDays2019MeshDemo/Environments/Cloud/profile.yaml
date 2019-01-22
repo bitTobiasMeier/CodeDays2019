@@ -1,0 +1,18 @@
+## Visual Studio SFApp Publish Profile ##
+vsSFAppPublishProfile:
+  schemaVersion: 1.0.0-preview2
+  resourceGroupName: CodeDays2019MeshDemo-rg
+  subscription:
+    id: 3f1e9640-b1b2-4964-b213-e9ba83f9b5d9
+    name: tobiasmeierbitoutlook.onmicrosoft.com
+    tenant: &o0
+      id: 967a3728-d849-41ef-9a32-f1935ccc293d
+      uniqueId: e8cdb30f-5cf4-4b22-b2df-72fbca05e2a5
+  location:
+    name: westeurope
+    displayName: West Europe
+  containerRegistry:
+    serverName: meshacr.azurecr.io
+    userName: Meshacr
+    resourceId: /subscriptions/3f1e9640-b1b2-4964-b213-e9ba83f9b5d9/resourceGroups/CodeDays2019MeshDemo-rg/providers/Microsoft.ContainerRegistry/registries/Meshacr
+    tenant: *o0
